@@ -34,9 +34,12 @@ export default async function Home() {
       },
     });
 
-    if (!response.ok) {
-      redirect("/signin");
-    }
+    if (!response.ok) redirect("/signin");
+
+    const data = await response.json();
+    const allowed_users = (process.env.ALLOWED_USERS || "").split(",");
+
+    if (!allowed_users.includes(data.Name)) redirect("/signin");
   } catch (_) {
     redirect("/signin");
   }
