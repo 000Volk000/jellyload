@@ -1,5 +1,5 @@
 import { verify } from "@/app/actions/auth";
-import { download } from "@/app/actions/download";
+import { DownloadForm } from "./download_form";
 
 export default async function Home() {
   await verify();
@@ -13,26 +13,7 @@ export default async function Home() {
             Download Music
           </h1>
         </header>
-        <form action={download}>
-          <div>
-            <label className="block mb-2 text-purple-500" htmlFor="link">
-              Youtube Link
-            </label>
-            <input
-              className="w-full p-2 mb-6 text-purple-700 border-b-2 border-purple-500 outline-none focus:bg-gray-300"
-              type="text"
-              id="link"
-              name="link"
-            />
-          </div>
-          <div>
-            <input
-              className="w-full bg-purple-700 hover:bg-indigo-700 text-white font-bold py-2 px-4 mb-4 rounded"
-              type="submit"
-              value="Download"
-            />
-          </div>
-        </form>
+        <DownloadForm />
       </div>
     </div>
   );
