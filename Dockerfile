@@ -6,7 +6,7 @@ WORKDIR /app
 COPY . /app
 
 RUN apt update
-RUN apt install yt-dlp
+RUN apt install yt-dlp -y
 
 RUN pnpm install
 RUN pnpm run build
