@@ -1,8 +1,8 @@
 "use server";
 
 import packageInfo from "@/../package.json";
-import { headers } from "next/headers";
-const headersList = await headers();
+import { headers, cookies } from "next/headers";
+import { randomUUID } from "crypto";
 
 interface User {
   Username: string;
@@ -10,11 +10,21 @@ interface User {
 }
 
 export async function signin(formData: FormData) {
+  const headers_list = await headers();
+  const cookies_storage = await cookies();
+
   const jellyfin_url =
     process.env.JELLYFIN_BASE_URL + "/Users/AuthenticateByName";
 
   const client = packageInfo.name;
-  const device = headersList.get("user-agent") || "Unknown Device";
+  const device = headers_list.get("user-agent") || "Unknown Device";
+  let device_id;
+  if (cookies_storage.has("jellyfin_device_id")) {
+    device_id = cookies_storage.get("jellyfin_device_id")?.value;
+  } else {
+    device_id = randomUUID();
+    cookies_storage.set("jellyfin_device_id", device_id);
+  }
   const version = packageInfo.version;
 
   // TODO create UUID
@@ -23,7 +33,9 @@ export async function signin(formData: FormData) {
     client +
     ", Device=" +
     device +
-    ', DeviceId="UUID", Version=' +
+    ", DeviceId=" +
+    device_id +
+    ", Version=" +
     version;
 
   const user: User = {
