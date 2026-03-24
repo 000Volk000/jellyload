@@ -1,4 +1,5 @@
 import { verify } from "@/app/actions/auth";
+import { download } from "@/app/actions/download";
 
 export default async function Home() {
   await verify();
@@ -12,7 +13,7 @@ export default async function Home() {
             Download Music
           </h1>
         </header>
-        <form>
+        <form action={download}>
           <div>
             <label className="block mb-2 text-purple-500" htmlFor="link">
               Youtube Link
