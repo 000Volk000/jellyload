@@ -10,7 +10,7 @@ env:
   DOCKER_BUILDKIT: 1
   IMAGE_NAME: ghcr.io/000volk000/jellyload
   CHARTS_REPOSITORY: 000volk000/charts
-  CHARTS_DIRECTORY: linktree
+  CHARTS_DIRECTORY: jellyload
 
 jobs:
   build-and-push:
