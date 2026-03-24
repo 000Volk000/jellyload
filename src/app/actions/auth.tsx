@@ -54,7 +54,7 @@ export async function signin(_: any, form_data: FormData) {
     const data = await response.json();
 
     cookies_storage.set("jellyfin_access_token", data.AccessToken);
-  } catch (error) {
+  } catch (_) {
     return {
       error: "Internal server error",
     };
