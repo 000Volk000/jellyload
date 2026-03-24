@@ -3,6 +3,7 @@
 import packageInfo from "@/../package.json";
 import { headers, cookies } from "next/headers";
 import { randomUUID } from "crypto";
+import { redirect } from "next/navigation";
 
 interface User {
   Username: string;
@@ -51,8 +52,13 @@ export async function signin(_: any, form_data: FormData) {
     }
 
     const data = await response.json();
-    console.log(data);
+
+    cookies_storage.set("jellyfin_access_token", data.AccessToken);
   } catch (error) {
-    console.error("Error:", error);
+    return {
+      error: "Internal server error",
+    };
   }
+
+  redirect("/");
 }
