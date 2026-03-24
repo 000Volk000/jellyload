@@ -1,3 +1,5 @@
+import { signin } from "@/app/actions/auth";
+
 export default function Home() {
   return (
     <div className="flex h-screen bg-purple-700">
@@ -5,7 +7,7 @@ export default function Home() {
         <header>
           <img className="w-20 mx-auto mb-5" src="logo.svg" />
         </header>
-        <form>
+        <form action={signin}>
           <div>
             <label className="block mb-2 text-purple-500" htmlFor="username">
               Username
@@ -13,6 +15,7 @@ export default function Home() {
             <input
               className="w-full p-2 mb-6 text-purple-700 border-b-2 border-purple-500 outline-none focus:bg-gray-300"
               type="text"
+              id="username"
               name="username"
             />
           </div>
@@ -23,6 +26,7 @@ export default function Home() {
             <input
               className="w-full p-2 mb-6 text-purple-700 border-b-2 border-purple-500 outline-none focus:bg-gray-300"
               type="password"
+              id="password"
               name="password"
             />
           </div>
