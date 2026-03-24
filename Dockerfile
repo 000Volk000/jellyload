@@ -5,8 +5,10 @@ RUN corepack enable && corepack prepare pnpm@latest --activate
 WORKDIR /app
 COPY . /app
 
-RUN apt update
-RUN apt install yt-dlp -y
+RUN apt-get update && \
+    apt-get install -y python3 curl && \
+    curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/bin/yt-dlp && \
+    chmod a+rx /usr/bin/yt-dlp
 
 RUN pnpm install
 RUN pnpm run build
