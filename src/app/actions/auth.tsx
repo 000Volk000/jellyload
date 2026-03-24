@@ -9,7 +9,7 @@ interface User {
   Pw: string;
 }
 
-export async function signin(formData: FormData) {
+export async function signin(_: any, form_data: FormData) {
   const headers_list = await headers();
   const cookies_storage = await cookies();
 
@@ -27,20 +27,11 @@ export async function signin(formData: FormData) {
   }
   const version = packageInfo.version;
 
-  // TODO create UUID
-  const authHeader =
-    "MediaBrowser Client=" +
-    client +
-    ", Device=" +
-    device +
-    ", DeviceId=" +
-    device_id +
-    ", Version=" +
-    version;
+  const authHeader = `MediaBrowser Client=${client}, Device=${device}, DeviceId=${device_id}, Version=${version}`;
 
   const user: User = {
-    Username: formData.get("username") as string,
-    Pw: formData.get("password") as string,
+    Username: form_data.get("username") as string,
+    Pw: form_data.get("password") as string,
   };
 
   try {
@@ -54,7 +45,9 @@ export async function signin(formData: FormData) {
     });
 
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      return {
+        error: `Username or Password is incorrect\nHTTP status: ${response.status}`,
+      };
     }
 
     const data = await response.json();
